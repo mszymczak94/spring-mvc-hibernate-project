@@ -2,8 +2,6 @@ package com.szymczak.springdemo.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -35,8 +33,16 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public void saveCustomer(Customer theCustomer) {
 		Session session = sessionFactory.getCurrentSession();
 		
-		session.save(theCustomer);
+		session.saveOrUpdate(theCustomer);
 		
+	}
+
+
+	@Override
+	public Customer getCustomer(int customerId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Customer theCustomer = currentSession.get(Customer.class, customerId);
+		return theCustomer;
 	}
 
 }
