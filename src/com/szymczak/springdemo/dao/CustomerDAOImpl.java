@@ -57,4 +57,14 @@ public class CustomerDAOImpl implements CustomerDAO {
 		
 	}
 
+
+	@Override
+	public List<Customer> getCustomerByFirstOrLastName(String name) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Query<Customer> createQuery = currentSession.createQuery("from Customer where firstName=:name OR lastName=:name order by lastName", Customer.class);
+		createQuery.setParameter("name", name);
+		return createQuery.getResultList();
+	}
+
 }

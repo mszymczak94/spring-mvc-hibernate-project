@@ -1,5 +1,7 @@
 package com.szymczak.springdemo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +54,13 @@ public class CustomerController {
 	public String delete(@RequestParam("customerId")int customerId, Model theModel) {
 		customerService.delete(customerId);
 		return "redirect:/customer/list";
+	}
+	
+	@GetMapping("/search")
+	public String searchCustomer(@RequestParam("theSearchName")String name, Model theModel) {
+		List<Customer> customers = customerService.getCustomerByFirstOrLastName(name);
+		theModel.addAttribute("customers", customers);
+		return "list-customers";
 	}
 
 }
